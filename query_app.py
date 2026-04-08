@@ -10,6 +10,7 @@ from llama_index.llms.openai_like import OpenAILike
 from llama_index.core import Settings, PromptTemplate
 from langfuse import get_client
 
+
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5433")
 POSTGRES_DB = os.getenv("POSTGRES_DB", "ragapp")
