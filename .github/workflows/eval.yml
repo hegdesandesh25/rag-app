@@ -6,12 +6,18 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   evaluate:
     runs-on: self-hosted
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python path
+        run: echo "$HOME/aiml/rag-app/venv/bin" >> $GITHUB_PATH
 
       - name: Cache pip dependencies
         uses: actions/cache@v4
@@ -65,4 +71,3 @@ jobs:
         with:
           name: eval-results
           path: eval_results.json
-
