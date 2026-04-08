@@ -1,0 +1,52 @@
+[
+  {
+    "question": "How many days of annual leave do employees get?",
+    "expected": "25 days",
+    "category": "hr-policy"
+  },
+  {
+    "question": "How much notice is needed to book annual leave?",
+    "expected": "2 weeks",
+    "category": "hr-policy"
+  },
+  {
+    "question": "How many sick days are employees entitled to?",
+    "expected": "10 days",
+    "category": "hr-policy"
+  },
+  {
+    "question": "Can unused sick leave carry over?",
+    "expected": "No, sick leave does not carry over",
+    "category": "hr-policy"
+  },
+  {
+    "question": "How many days can unused annual leave be carried over?",
+    "expected": "Maximum 5 days",
+    "category": "hr-policy"
+  },
+  {
+    "question": "How many days remote work are employees allowed per week?",
+    "expected": "3 days",
+    "category": "hr-policy"
+  },
+  {
+    "question": "How often is each engineer on call?",
+    "expected": "Once every 6 weeks",
+    "category": "engineering"
+  },
+  {
+    "question": "How quickly must on-call engineers respond to P1 incidents?",
+    "expected": "15 minutes",
+    "category": "engineering"
+  },
+  {
+    "question": "How many approvals are needed for a pull request?",
+    "expected": "2 approvals",
+    "category": "engineering"
+  },
+  {
+    "question": "When are deployments frozen each week?",
+    "expected": "Friday at 3pm until Monday morning",
+    "category": "engineering"
+  }
+]

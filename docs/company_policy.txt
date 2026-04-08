@@ -1,0 +1,20 @@
+`docs/company_policy.txt`:
+```
+ACME Corporation Leave Policy 2024
+
+Annual Leave:
+All full-time employees are entitled to 25 days annual leave per year.
+Leave must be approved by your line manager at least 2 weeks in advance.
+Unused leave can be carried over up to a maximum of 5 days per year.
+Leave during peak periods (December 15 to January 5) requires 4 weeks notice.
+
+Sick Leave:
+Employees are entitled to 10 days paid sick leave per year.
+A medical certificate is required for absences longer than 3 consecutive days.
+Sick leave does not carry over to the following year.
+
+Remote Work Policy:
+Employees may work remotely up to 3 days per week.
+Remote work must be agreed with your line manager.
+Core hours of 10am to 3pm must be maintained regardless of location.
+```

@@ -1,0 +1,72 @@
+name: RAG Eval Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  evaluate:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+         source ~/aiml/rag-app/venv/bin/activate
+         echo "PATH=$PATH" >> $GITHUB_ENV
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ensure Ollama models are available
+        run: |
+          ollama pull mistral
+          ollama pull nomic-embed-text
+
+      - name: Index documents
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5433
+          POSTGRES_DB: ragapp
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          OLLAMA_BASE_URL: http://localhost:11434
+          LITELLM_API_BASE: http://localhost:4000
+          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
+        run: python index_documents.py
+
+      - name: Run evaluations
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5433
+          POSTGRES_DB: ragapp
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          OLLAMA_BASE_URL: http://localhost:11434
+          LITELLM_API_BASE: http://localhost:4000
+          LITELLM_API_KEY: ${{ secrets.LITELLM_API_KEY }}
+          LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+          LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+          LANGFUSE_HOST: ${{ secrets.LANGFUSE_HOST }}
+          EVAL_THRESHOLD: "0.7"
+        run: python evals/run_evals.py
+
+      - name: Upload eval results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-results
+          path: eval_results.json

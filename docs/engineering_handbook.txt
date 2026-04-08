@@ -1,0 +1,19 @@
+```
+ACME Engineering Team Handbook
+
+On-Call Rotation:
+The on-call rotation runs Monday to Monday.
+Each engineer is on-call approximately once every 6 weeks.
+On-call engineers must respond to P1 incidents within 15 minutes.
+On-call compensation is an additional 10% of weekly salary.
+
+Deployment Process:
+All deployments must go through the staging environment first.
+Production deployments require approval from at least one senior engineer.
+Deployments are frozen every Friday at 3pm until Monday morning.
+Emergency hotfixes require approval from the engineering manager.
+
+Code Review Standards:
+All pull requests require at least 2 approvals before merging.
+Pull requests should not exceed 400 lines of code changes.
+Reviewers must respond within 24 hours during business days.```
