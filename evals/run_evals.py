@@ -64,7 +64,6 @@ def load_index():
     )
 
 def judge_answer(question: str, expected: str, actual: str) -> float:
-    """Use LLM as judge to score answer quality 0-1"""
     judge_prompt = f"""You are evaluating an AI assistant's answer.
 
 Question: {question}
@@ -78,17 +77,27 @@ Score the actual answer from 0 to 1:
 
 Respond with ONLY a number between 0 and 1. Nothing else."""
 
-    # Use LLM directly as judge
     from llama_index.core.llms import ChatMessage
+    import re
+
     response = Settings.llm.chat([
         ChatMessage(role="user", content=judge_prompt)
     ])
 
-    try:
-        score = float(str(response).strip())
-        return min(max(score, 0.0), 1.0)  # clamp between 0 and 1
-    except:
-        return 0.0
+    # DEBUG - see exactly what's coming back
+    raw = str(response)
+    print(f"  RAG actual: '{actual[:80]}'")
+    print(f"  Judge raw response: '{raw}'")
+
+    # Extract number from response using regex
+    # handles "0.8", "I give it 0.8", "Score: 1.0" etc
+    matches = re.findall(r'\b(0\.\d+|1\.0|0\.0|0|1)\b', raw)
+    if matches:
+        score = float(matches[0])
+        return min(max(score, 0.0), 1.0)
+
+    print(f"  Could not parse score, defaulting to 0.0")
+    return 0.0
 
 def run_evals():
     print("Loading eval dataset...")
